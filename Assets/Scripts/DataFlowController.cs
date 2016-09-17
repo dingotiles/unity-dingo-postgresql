@@ -58,11 +58,17 @@ public class DataFlowController : Controller<DingoApplication> {
 			return;
 		}
 
+		GameObject fromSphere = fromTileSlotView.database.sphere.gameObject;
+		GameObject toSphere = toTileSlotView.database.sphere.gameObject;
+
 		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
-		dataFlowObj.transform.position = fromTileSlotView.database.sphere.gameObject.transform.position;
+		dataFlowObj.transform.position = fromSphere.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+
 		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
-		mover.to = toTileSlotView.database.sphere.transform;
+		mover.to = toSphere.transform;
+
+		toSphere.GetComponent<DatabaseSphereView> ().IncomingObject (dataFlowObj);
 	}
 
 }

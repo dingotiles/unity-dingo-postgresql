@@ -12,12 +12,15 @@ public class DatabaseSphereView : View<DingoApplication> {
 	LineRenderer lineWaveRenderer;
 	LineWave lineWave;
 
+	ArrayList incomingParentObjects;
+
 	void Awake()
 	{
 		lineWave = GetComponentInChildren<LineWave> ();
 		if (lineWave != null) {
 			lineWaveRenderer = lineWave.gameObject.GetComponent<LineRenderer> ();
 		}
+		incomingParentObjects = new ArrayList ();
 	}
 
 	void Update ()
@@ -40,5 +43,27 @@ public class DatabaseSphereView : View<DingoApplication> {
 				lineWave.targetOptional = null;
 			}
 		}
+	}
+
+	// Destroy inbound data flow (backups) objects
+	void OnTriggerEnter(Collider collider) {
+		DataFlowMover parent = collider.GetComponentInParent<DataFlowMover> ();
+		if (parent != null) {
+			if (incomingParentObjects.Contains (parent.gameObject)) {
+				Destroy (parent.gameObject);
+				incomingParentObjects.Remove (parent.gameObject);
+			}
+		} else {
+			if (incomingParentObjects.Contains (collider.gameObject)) {
+				Destroy (collider.gameObject);
+				incomingParentObjects.Remove (collider.gameObject);
+			}
+		}
+	}
+
+	// Do not self destruct until all incoming objects have been received/destroy,
+	// and waited a pause period.
+	public void IncomingObject(GameObject parentObj) {
+		incomingParentObjects.Add (parentObj);
 	}
 }

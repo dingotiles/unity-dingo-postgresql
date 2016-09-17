@@ -22,11 +22,14 @@ public class CloudView : View<DingoApplication> {
 	}
 
 	void OnTriggerEnter(Collider collider) {
-		Destroy (collider.gameObject);
+		DataFlowMover parent = collider.GetComponentInParent<DataFlowMover> ();
+		if (parent != null) {
+			Destroy (collider.gameObject);
+		}
 		if (incomingParentObjects.Contains(collider.gameObject)) {
 			incomingParentObjects.Remove (collider.gameObject);
 		}
-			if (incomingParentObjects.Count == 0) {
+		if (incomingParentObjects.Count == 0) {
 			RestartDeathTimer ();
 		}
 	}
