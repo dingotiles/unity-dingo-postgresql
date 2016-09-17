@@ -29,19 +29,20 @@ public class DataFlowController : Controller<DingoApplication> {
 	{
 		TileSlotView fromTileSlotView = app.view.FindTileSlot (serviceInstanceModel, "leader");
 
-		if (fromTileSlotView != null) {
-			GameObject cloudObj = app.view.ShowCloudOverLeader (fromTileSlotView);
-
-			GameObject dataFlowObj = Instantiate (prefab) as GameObject;
-			dataFlowObj.transform.position = fromTileSlotView.database.sphere.gameObject.transform.position;
-			dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
-			DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
-			mover.to = cloudObj.transform;
-
-			cloudObj.GetComponent<CloudView> ().IncomingObject (dataFlowObj);
-		} else {
+		if (fromTileSlotView == null) {
 			Debug.Log ("Cannot show data-flow: cannot find leader for " + serviceInstanceModel);
+			return;
 		}
+		GameObject toCloud = app.view.ShowCloudOverLeader (fromTileSlotView);
+
+		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
+		dataFlowObj.transform.position = fromTileSlotView.database.sphere.gameObject.transform.position;
+		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+
+		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
+		mover.to = toCloud.transform;
+
+		toCloud.GetComponent<CloudView> ().IncomingObject (dataFlowObj);
 	}
 
 	void OnRequestToReplica(ServiceInstanceModel serviceInstanceModel, GameObject prefab)
