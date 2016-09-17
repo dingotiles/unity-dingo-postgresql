@@ -8,6 +8,8 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 
 	public bool sendBaseBackup;
 	bool sendingDataFlow;
+	public bool sendReplicaBackup;
+	bool sendingReplicaBackup;
 
 	public ServersModel.Server leaderServer;
 	public ServersModel.Server replicaServer;
@@ -22,6 +24,9 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 		if (sendBaseBackup && !sendingDataFlow) {
 			SendBaseBackup ();
 		}
+		if (sendReplicaBackup && !sendingReplicaBackup) {
+			SendReplicaBackup ();
+		}
 	}
 
 	void SendBaseBackup() {
@@ -31,6 +36,15 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 
 		sendBaseBackup = false;
 		sendingDataFlow = false;
+	}
+
+	void SendReplicaBackup() {
+		sendReplicaBackup = true;
+
+		app.Notify ("data-flow.replica-backup.request", this);
+
+		sendReplicaBackup = false;
+		sendingReplicaBackup = false;
 	}
 
 	public bool Equals(ServiceInstanceModel other) {
