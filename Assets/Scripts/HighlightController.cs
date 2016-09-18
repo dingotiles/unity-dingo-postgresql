@@ -32,7 +32,7 @@ public class HighlightController : Controller<DingoApplication> {
 			if (tileSlots.leader != null) {
 				tileSlots.leader.allocatedServiceInstance = model;
 				tileSlots.leader.highlightContents = model.highlight;
-				tileSlots.leader.replica = tileSlots.replica;
+				tileSlots.leader.trafficFlowTarget = tileSlots.replica;
 			}
 			if (tileSlots.replica != null) {
 				tileSlots.replica.allocatedServiceInstance = model;
@@ -41,6 +41,7 @@ public class HighlightController : Controller<DingoApplication> {
 			if (tileSlots.router != null) {
 				tileSlots.router.allocatedServiceInstance = model;
 				tileSlots.router.highlightContents = model.highlight;
+				tileSlots.router.trafficFlowTarget = tileSlots.leader;
 			}
 		}
 		if (model.highlight) {

@@ -6,8 +6,9 @@ public class TileSlotView : View<DingoApplication> {
 
 	public bool visible;
 	public bool highlightContents;
-	// If this TileSlowView contains a leader, then replica contains the target replica
-	public TileSlotView replica;
+	// If this TileSlowView contains a leader, then trafficFlowTarget contains the target replica
+	// If this TileShowView is a router, then trafficFlowTarget is leader
+	public TileSlotView trafficFlowTarget;
 	public bool isLeader;
 	public bool isRole(string role)
 	{
@@ -65,8 +66,8 @@ public class TileSlotView : View<DingoApplication> {
 	public void SetContentsHighlight(bool highlight)
 	{
 		if (contents != null) {
-			if (replica != null) {
-				database.replica = replica.database;
+			if (trafficFlowTarget != null) {
+				database.replica = trafficFlowTarget.database;
 			}
 			database.SetHighlight (highlight);
 		}

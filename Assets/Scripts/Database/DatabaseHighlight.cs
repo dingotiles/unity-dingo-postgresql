@@ -27,6 +27,7 @@ public class DatabaseHighlight : View<DingoApplication>
 
 	public void SetHighlight(bool doHighlight)
 	{
+		// TODO - 'replica' might be 'leader' for RouterView/TileSlotViews
 		if (doHighlight && replica != null) {
 			sphere.outboundTarget = replica.sphere.gameObject;
 		}
