@@ -7,6 +7,7 @@ public class DingoController : Controller<DingoApplication> {
 	public class TileSlotReference {
 		public TileSlotView leader;
 		public TileSlotView replica;
+		public TileSlotView router;
 	}
 
 	public Dictionary<ServiceInstanceModel, TileSlotReference> tileSlotCache;
@@ -14,7 +15,6 @@ public class DingoController : Controller<DingoApplication> {
 	void Awake() {
 		app.view.AvailabilityZones.ConstructServerViews (app.model.Servers.servers);
 		app.view.AvailabilityZones.EnableServerViews (app.model.Servers.servers);
-		app.view.AvailabilityZones.EnableServerContentsViews (app.model.ServiceInstances.ServiceInstances);
 		InitializeTileSlotCache ();
 	}
 
@@ -31,6 +31,7 @@ public class DingoController : Controller<DingoApplication> {
 
 	void OnCreated(ServiceInstanceModel model) {
 		app.view.AvailabilityZones.EnableServerContentsViews (app.model.ServiceInstances.ServiceInstances);
+		app.view.Router.EnableRoutingViews (app.model.ServiceInstances.ServiceInstances);
 		InitializeTileSlotCache ();
 	}
 
@@ -57,6 +58,13 @@ public class DingoController : Controller<DingoApplication> {
 						}
 					}
 				}
+			}
+		}
+		for (int i = 0; i < app.view.Router.RouterServerView.TileSlots.Length; i++) {
+			TileSlotView tileSlot = app.view.Router.RouterServerView.TileSlots [i];
+			if (tileSlot.allocatedServiceInstance != null) {
+				TileSlotReference cache = tileSlotCache [tileSlot.allocatedServiceInstance];
+				cache.router = tileSlot;
 			}
 		}
 

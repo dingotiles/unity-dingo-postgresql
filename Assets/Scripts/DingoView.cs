@@ -18,6 +18,9 @@ public class DingoView : View<DingoApplication> {
 	public AvailabilityZonesView AvailabilityZones { get { return p_azs = base.Assert<AvailabilityZonesView> (p_azs); } }
 	AvailabilityZonesView p_azs;
 
+	public RouterView Router { get { return p_router = base.Assert<RouterView> (p_router); } }
+	RouterView p_router;
+
 	public TileSlotView FindTileSlot(ServiceInstanceModel serviceInstance, string role)
 	{
 		TileSlotView[] slots = transform.GetComponentsInChildren<TileSlotView> ();

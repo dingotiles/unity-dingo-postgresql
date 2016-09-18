@@ -38,6 +38,10 @@ public class HighlightController : Controller<DingoApplication> {
 				tileSlots.replica.allocatedServiceInstance = model;
 				tileSlots.replica.highlightContents = model.highlight;
 			}
+			if (tileSlots.router != null) {
+				tileSlots.router.allocatedServiceInstance = model;
+				tileSlots.router.highlightContents = model.highlight;
+			}
 		}
 		if (model.highlight) {
 			latestHighlighted.Add (model);
