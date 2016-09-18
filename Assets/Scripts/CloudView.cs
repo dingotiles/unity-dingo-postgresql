@@ -23,7 +23,7 @@ public class CloudView : View<DingoApplication> {
 
 	void OnTriggerEnter(Collider collider) {
 		DataFlowMover parent = collider.GetComponentInParent<DataFlowMover> ();
-		if (parent != null) {
+		if (parent != null && incomingParentObjects.Contains(parent.gameObject)) {
 			Destroy (collider.gameObject);
 		}
 		if (incomingParentObjects.Contains(collider.gameObject)) {

@@ -14,6 +14,10 @@ public class DataFlowController : Controller<DingoApplication> {
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnRequestToCloud (serviceInstanceModel, baseBackupPrefab);
 			break;
+		case "data-flow.restoration.request":
+			serviceInstanceModel = (ServiceInstanceModel)p_target;
+			OnRequestFromCloud (serviceInstanceModel, baseBackupPrefab);
+			break;
 		case "data-flow.replica-backup.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnRequestToReplica (serviceInstanceModel, replicaBackupPrefab);
@@ -43,6 +47,27 @@ public class DataFlowController : Controller<DingoApplication> {
 		mover.to = toCloud.transform;
 
 		toCloud.GetComponent<CloudView> ().IncomingObject (dataFlowObj);
+	}
+
+	void OnRequestFromCloud(ServiceInstanceModel serviceInstanceModel, GameObject prefab)
+	{
+		TileSlotView toTileSlotView = app.view.FindTileSlot (serviceInstanceModel, "leader");
+
+		if (toTileSlotView == null) {
+			Debug.Log ("Cannot show data-flow: cannot find leader for " + serviceInstanceModel);
+			return;
+		}
+		GameObject toSphere = toTileSlotView.database.sphere.gameObject;
+		GameObject fromCloud = app.view.ShowCloudOverLeader (toTileSlotView);
+
+		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
+		dataFlowObj.transform.position = fromCloud.gameObject.transform.position;
+		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+
+		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
+		mover.to = toSphere.transform;
+
+		toSphere.GetComponent<DatabaseSphereView> ().IncomingObject (dataFlowObj);
 	}
 
 	void OnRequestToReplica(ServiceInstanceModel serviceInstanceModel, GameObject prefab)

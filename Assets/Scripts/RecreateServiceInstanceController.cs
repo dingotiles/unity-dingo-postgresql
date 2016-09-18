@@ -5,6 +5,7 @@ using thelab.mvc;
 public class RecreateServiceInstanceController : Controller<DingoApplication> 
 {
 	public float waitToRecreate = 5f;
+	public float waitToBackup = 3f;
 
 	public override void OnNotification(string p_event, Object p_target, params object[] p_data)
 	{
@@ -31,6 +32,8 @@ public class RecreateServiceInstanceController : Controller<DingoApplication>
 		yield return new WaitForSeconds(waitToRecreate);
 		app.Notify ("service-instance.create.request", serviceInstanceModel);
 		yield return new WaitForSeconds(1f);
+		app.Notify ("data-flow.restoration.request", serviceInstanceModel);
+		yield return new WaitForSeconds(waitToBackup);
 		app.Notify ("data-flow.base-backup.request", serviceInstanceModel);
 		yield return new WaitForSeconds(1f);
 		app.Notify ("data-flow.replica-backup.request", serviceInstanceModel);
