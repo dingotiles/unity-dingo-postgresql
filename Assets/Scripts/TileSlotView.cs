@@ -33,6 +33,11 @@ public class TileSlotView : View<DingoApplication> {
 	GameObject cloudObject;
 
 	public ServiceInstanceModel allocatedServiceInstance = null;
+	MeshRenderer meshRenderer;
+
+	void Awake() {
+		meshRenderer = GetComponent<MeshRenderer> ();
+	}
 
 	void Update () {
 		if (visible || allocatedServiceInstance != null) {
@@ -94,5 +99,14 @@ public class TileSlotView : View<DingoApplication> {
 			cloudObject.transform.localPosition = new Vector3 (0, cloudY, 0);
 		}
 		return cloudObject;
+	}
+
+	public void EnableCursor(bool enable) {
+		if (enable) {
+			app.view.ClearTileSlotCursors ();
+			meshRenderer.sharedMaterial = app.view.tileSlotCursor;
+		} else {
+			meshRenderer.sharedMaterial = app.view.tileSlotDefault;
+		}
 	}
 }

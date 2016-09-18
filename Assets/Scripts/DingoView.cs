@@ -14,6 +14,8 @@ public class DingoView : View<DingoApplication> {
 	public GameObject svrContentsPrefab;
 	public GameObject svrPrefab;
 	public GameObject cloudPrefab;
+	public Material tileSlotDefault;
+	public Material tileSlotCursor;
 
 	public AvailabilityZonesView AvailabilityZones { get { return p_azs = base.Assert<AvailabilityZonesView> (p_azs); } }
 	AvailabilityZonesView p_azs;
@@ -37,5 +39,13 @@ public class DingoView : View<DingoApplication> {
 	public GameObject ShowCloudOverLeader (TileSlotView tileSlot)
 	{
 		return tileSlot.ShowCloud ();
+	}
+
+	public void ClearTileSlotCursors() 
+	{
+		TileSlotView[] slots = transform.GetComponentsInChildren<TileSlotView> ();
+		for (int i = 0; i < slots.Length; i++) {
+			slots [i].EnableCursor (false);
+		}
 	}
 }
