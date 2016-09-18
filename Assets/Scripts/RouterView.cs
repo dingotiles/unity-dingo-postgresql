@@ -4,12 +4,8 @@ using thelab.mvc;
 
 public class RouterView : View<DingoApplication>
 {
-	public ServerView RouterServerView;
-
-	void Awake()
-	{ 
-		RouterServerView = gameObject.GetComponent<ServerView> ();
-	}
+	public ServerView RouterServerView { get { return p_server_view = gameObject.GetComponent<ServerView> (); } }
+	ServerView p_server_view;
 
 	public void EnableRoutingViews(ServiceInstanceModel[] serviceInstances)
 	{
