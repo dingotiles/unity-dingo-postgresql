@@ -19,7 +19,6 @@ public class CursorMovement : Controller<DingoApplication> {
 
 	void ShowCursor()
 	{
-//		Debug.Log (Input.mousePosition);
 		Ray cameraRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit tileSlotHit;
 		if (Physics.Raycast (cameraRay, out tileSlotHit, camRayLength, tileSlotMask)) {
@@ -29,5 +28,4 @@ public class CursorMovement : Controller<DingoApplication> {
 			}
 		}
 	}
-
 }
