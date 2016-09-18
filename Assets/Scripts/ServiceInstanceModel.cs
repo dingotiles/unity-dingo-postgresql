@@ -10,6 +10,7 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 	// Booleans emulating action buttons - if set, trigger action and reset bool
 	public bool sendBaseBackup;
 	public bool sendReplicaBackup;
+	public bool sendData;
 	public bool recreateFromBackup;
 
 	public ServersModel.Server leaderServer;
@@ -28,6 +29,10 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 		if (sendReplicaBackup) {
 			sendReplicaBackup = false;
 			app.Notify ("data-flow.replica-backup.request", this);
+		}
+		if (sendData) {
+			sendData = false;
+			app.Notify ("data-flow.data.request", this);
 		}
 		if (recreateFromBackup) {
 			recreateFromBackup = false;

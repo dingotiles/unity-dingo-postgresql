@@ -10,12 +10,20 @@ public class TileSlotView : View<DingoApplication> {
 	// If this TileShowView is a router, then trafficFlowTarget is leader
 	public TileSlotView trafficFlowTarget;
 	public bool isLeader;
+	public bool isRouter;
 	public bool isRole(string role)
 	{
 		if (role == "leader") {
 			return isLeader;
 		}
-		return !isLeader;
+		if (role == "router") {
+			return isRouter;
+		}
+		if (role == "replica") {
+			return !isLeader && !isRouter;
+		}
+		Debug.Log ("Unknown role: " + role);
+		return false;
 	}
 
 	public DatabaseHighlight database { get { return p_database = base.Assert<DatabaseHighlight> (p_database); } }
