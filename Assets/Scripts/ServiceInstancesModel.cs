@@ -38,13 +38,8 @@ public class ServiceInstancesModel : Model<DingoApplication> {
 		serviceInstance.name = "Demo " + serviceInstance.port;
 		serviceInstance.highlight = highlight;
 
-		serviceInstance.leaderServer.az = ServersModel.AvailabilityZone.AvailabilityZone1;
-		serviceInstance.leaderServer.serverLabel = RandomAvailableServer(serviceInstance.leaderServer.az);
-		serviceInstance.replicaServer.az = ServersModel.AvailabilityZone.AvailabilityZone2;
-		serviceInstance.replicaServer.serverLabel = RandomAvailableServer(serviceInstance.replicaServer.az);
-
 		p_service_instances = null;
-		app.Notify ("service-instance.created", serviceInstance);
+		app.Notify ("service-instance.create.request", serviceInstance);
 		app.Notify ("service-instances.update", this);
 
 		addDemo = false;
@@ -70,8 +65,4 @@ public class ServiceInstancesModel : Model<DingoApplication> {
 		return lastAllocatedPort;
 	}
 
-	string RandomAvailableServer(ServersModel.AvailabilityZone az) {
-		ServersModel.Server server = app.model.Servers.RandomAvailableServer (az);
-		return server.serverLabel;
-	}
 }

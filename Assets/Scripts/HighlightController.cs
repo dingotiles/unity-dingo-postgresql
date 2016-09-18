@@ -45,6 +45,9 @@ public class HighlightController : Controller<DingoApplication> {
 			}
 		}
 		if (model.highlight) {
+			if (latestHighlighted.Contains (model)) {
+				latestHighlighted.Remove (model);
+			}
 			latestHighlighted.Add (model);
 			if (latestHighlighted.Count > app.model.ServiceInstances.maxHighlighted) {
 				ServiceInstanceModel oldestHighlight = latestHighlighted [0] as ServiceInstanceModel;

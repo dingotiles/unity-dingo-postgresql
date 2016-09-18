@@ -10,6 +10,7 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 	// Booleans emulating action buttons - if set, trigger action and reset bool
 	public bool sendBaseBackup;
 	public bool sendReplicaBackup;
+	public bool recreateFromBackup;
 
 	public ServersModel.Server leaderServer;
 	public ServersModel.Server replicaServer;
@@ -28,6 +29,17 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 			sendReplicaBackup = false;
 			app.Notify ("data-flow.replica-backup.request", this);
 		}
+		if (recreateFromBackup) {
+			recreateFromBackup = false;
+			app.Notify ("service-instance.recreate.request", this);
+		}
+	}
+
+	public void AssignServers() {
+		leaderServer.az = ServersModel.AvailabilityZone.AvailabilityZone1;
+		leaderServer.serverLabel = RandomAvailableServer (leaderServer.az);
+		replicaServer.az = ServersModel.AvailabilityZone.AvailabilityZone2;
+		replicaServer.serverLabel = RandomAvailableServer (replicaServer.az);
 	}
 
 	public bool Equals(ServiceInstanceModel other) {
@@ -36,5 +48,10 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 
 	public override string ToString() {
 		return "ServiceInstanceModel(" + name + "," + port + ")";
+	}
+
+	string RandomAvailableServer(ServersModel.AvailabilityZone az) {
+		ServersModel.Server server = app.model.Servers.RandomAvailableServer (az);
+		return server.serverLabel;
 	}
 }

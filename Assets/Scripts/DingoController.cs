@@ -21,17 +21,42 @@ public class DingoController : Controller<DingoApplication> {
 	public override void OnNotification(string p_event, Object p_target, params object[] p_data) {
 		ServiceInstanceModel serviceInstanceModel;
 		switch (p_event) {
-		case "service-instance.created":
+		case "service-instance.create.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnCreated (serviceInstanceModel);
+			break;
+		case "service-instance.delete.request":
+			serviceInstanceModel = (ServiceInstanceModel)p_target;
+			OnDeleted (serviceInstanceModel);
 			break;
 
 		}
 	}
 
-	void OnCreated(ServiceInstanceModel model) {
+	void OnCreated(ServiceInstanceModel serviceInstanceModel) {
+		serviceInstanceModel.AssignServers ();
 		app.view.AvailabilityZones.EnableServerContentsViews (app.model.ServiceInstances.ServiceInstances);
 		app.view.Router.EnableRoutingViews (app.model.ServiceInstances.ServiceInstances);
+		InitializeTileSlotCache ();
+		// Ensure highlighting kicks in
+		app.Notify ("service-instance.change.highlight", serviceInstanceModel);
+	}
+
+	void OnDeleted(ServiceInstanceModel serviceInstanceModel) {
+		TileSlotView fromTileSlotView = app.view.FindTileSlot (serviceInstanceModel, "leader");
+		TileSlotView toTileSlotView = app.view.FindTileSlot (serviceInstanceModel, "replica");
+		if (fromTileSlotView == null) {
+			Debug.Log ("Cannot recreate: cannot find leader tile slot for " + serviceInstanceModel);
+			return;
+		} else {
+			fromTileSlotView.allocatedServiceInstance = null;
+		}
+		if (toTileSlotView == null) {
+			Debug.Log ("Cannot recreate: cannot find replica tile slot for " + serviceInstanceModel);
+			return;
+		} else {
+			toTileSlotView.allocatedServiceInstance = null;
+		}
 		InitializeTileSlotCache ();
 	}
 
@@ -63,6 +88,9 @@ public class DingoController : Controller<DingoApplication> {
 		for (int i = 0; i < app.view.Router.RouterServerView.TileSlots.Length; i++) {
 			TileSlotView tileSlot = app.view.Router.RouterServerView.TileSlots [i];
 			if (tileSlot.allocatedServiceInstance != null) {
+				if (!tileSlotCache.ContainsKey(tileSlot.allocatedServiceInstance)) {
+					tileSlotCache [tileSlot.allocatedServiceInstance] = new TileSlotReference ();
+				}
 				TileSlotReference cache = tileSlotCache [tileSlot.allocatedServiceInstance];
 				cache.router = tileSlot;
 			}
