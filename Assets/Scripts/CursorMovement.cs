@@ -23,8 +23,10 @@ public class CursorMovement : Controller<DingoApplication> {
 		Ray cameraRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit tileSlotHit;
 		if (Physics.Raycast (cameraRay, out tileSlotHit, camRayLength, tileSlotMask)) {
-			TileSlotView tileSlot = tileSlotHit.collider.gameObject.GetComponent<TileSlotView> ();
-			tileSlot.EnableCursor (true);
+			TileSlotView tileSlot = tileSlotHit.collider.gameObject.GetComponentInParent<TileSlotView> ();
+			if (tileSlot != null) {
+				tileSlot.EnableCursor (true);
+			}
 		}
 	}
 
