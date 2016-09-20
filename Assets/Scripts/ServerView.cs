@@ -32,4 +32,8 @@ public class ServerView : View<DingoApplication> {
 		}
 		return nextUnallocated;
 	}
+
+	public void ActivateAction(TileSlotView tileSlot)
+	{
+	}
 }

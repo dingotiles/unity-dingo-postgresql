@@ -122,7 +122,7 @@ public class TileSlotView : View<DingoApplication> {
 			}
 			if(Input.GetButton ("Fire1") && activateActionTimer >= timeBetweenActivateAction && Time.timeScale != 0)
 			{
-				ActivateActionOnServiceInstance ();
+				ActivateAction ();
 			}
 
 		} else {
@@ -130,13 +130,18 @@ public class TileSlotView : View<DingoApplication> {
 		}
 	}
 
-	void ActivateActionOnServiceInstance()
+	// Generic TileSlotView can capture clicks, but defers to the parent ServerView's controller to determine
+	// what a click means for a blank or allocated TileSlotView
+	void ActivateAction()
 	{
 		activateActionTimer = 0f;
-		if (allocatedServiceInstance != null) {
-			Debug.Log ("Activate action on: " + allocatedServiceInstance);
+		RouterView router = GetComponentInParent<RouterView> ();
+		if (router != null) {
+			router.ActivateAction (this);
 		} else {
-			Debug.Log ("No allocated service instance model");
+			ServerView server = GetComponentInParent<ServerView> ();
+			server.ActivateAction (this);
 		}
+
 	}
 }
