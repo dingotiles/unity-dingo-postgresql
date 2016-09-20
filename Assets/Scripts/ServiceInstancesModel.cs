@@ -4,6 +4,7 @@ using thelab.mvc;
 
 public class ServiceInstancesModel : Model<DingoApplication> {
 	public int maxHighlighted = 1;
+	public int dataPacketsPerWAL = 4;
 	public GameObject serviceInstancePrefab;
 
 	public ServiceInstanceModel[] ServiceInstances { 

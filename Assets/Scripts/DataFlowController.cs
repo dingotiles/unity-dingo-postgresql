@@ -7,6 +7,7 @@ public class DataFlowController : Controller<DingoApplication> {
 	public GameObject walPrefab;
 	public GameObject dataPrefab;
 	public GameObject replicaBackupPrefab { get { return baseBackupPrefab; } }
+	public GameObject replicaWALPrefab { get { return walPrefab; } }
 
 	public override void OnNotification(string p_event, Object p_target, params object[] p_data) {
 		ServiceInstanceModel serviceInstanceModel;
@@ -14,18 +15,16 @@ public class DataFlowController : Controller<DingoApplication> {
 		case "data-flow.base-backup.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnRequestToCloud (serviceInstanceModel, baseBackupPrefab);
+			OnRequestToReplica (serviceInstanceModel, replicaBackupPrefab);
 			break;
 		case "data-flow.restoration.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnRequestFromCloud (serviceInstanceModel, baseBackupPrefab);
 			break;
-		case "data-flow.replica-backup.request":
-			serviceInstanceModel = (ServiceInstanceModel)p_target;
-			OnRequestToReplica (serviceInstanceModel, replicaBackupPrefab);
-			break;
 		case "data-flow.wal.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnRequestToCloud (serviceInstanceModel, walPrefab);
+			OnRequestToReplica (serviceInstanceModel, replicaWALPrefab);
 			break;
 		case "data-flow.data.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
