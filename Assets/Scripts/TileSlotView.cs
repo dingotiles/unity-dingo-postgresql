@@ -44,7 +44,7 @@ public class TileSlotView : View<DingoApplication> {
 	MeshRenderer meshRenderer;
 
 	float activateActionTimer;
-	public float timeBetweenActivateAction = 0.2f;
+	float timeBetweenActivateAction = 0.15f;
 
 	void Awake() {
 		meshRenderer = GetComponent<MeshRenderer> ();
