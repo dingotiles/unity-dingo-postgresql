@@ -43,11 +43,15 @@ public class TileSlotView : View<DingoApplication> {
 	public ServiceInstanceModel allocatedServiceInstance = null;
 	MeshRenderer meshRenderer;
 
+	float activateActionTimer;
+	public float timeBetweenActivateAction = 0.2f;
+
 	void Awake() {
 		meshRenderer = GetComponent<MeshRenderer> ();
 	}
 
 	void Update () {
+		activateActionTimer += Time.deltaTime;
 		if (visible || allocatedServiceInstance != null) {
 			ShowContents ();
 		} else {
@@ -109,12 +113,30 @@ public class TileSlotView : View<DingoApplication> {
 		return cloudObject;
 	}
 
-	public void EnableCursor(bool enable) {
+	public void EnableCursor(bool enable)
+	{
 		if (enable) {
-			app.view.ClearTileSlotCursors ();
-			meshRenderer.sharedMaterial = app.view.tileSlotCursor;
+			if (meshRenderer.sharedMaterial != app.view.tileSlotCursor) {
+				app.view.ClearTileSlotCursors ();
+				meshRenderer.sharedMaterial = app.view.tileSlotCursor;
+			}
+			if(Input.GetButton ("Fire1") && activateActionTimer >= timeBetweenActivateAction && Time.timeScale != 0)
+			{
+				ActivateActionOnServiceInstance ();
+			}
+
 		} else {
 			meshRenderer.sharedMaterial = app.view.tileSlotDefault;
+		}
+	}
+
+	void ActivateActionOnServiceInstance()
+	{
+		activateActionTimer = 0f;
+		if (allocatedServiceInstance != null) {
+			Debug.Log ("Activate action on: " + allocatedServiceInstance);
+		} else {
+			Debug.Log ("No allocated service instance model");
 		}
 	}
 }
