@@ -62,6 +62,7 @@ public class DataFlowController : Controller<DingoApplication> {
 			OnRequestFromCloud(serviceInstanceModel, walPrefab);
 			yield return new WaitForSeconds(1.5f);
 		}
+		serviceInstanceModel.ResetDataPacketsAfterNewBaseBackup ();
 	}
 
 	void OnRequestFromCloud(ServiceInstanceModel serviceInstanceModel, GameObject prefab)

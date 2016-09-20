@@ -5,7 +5,7 @@ using thelab.mvc;
 public class ServiceInstanceModel : Model<DingoApplication> {
 	public int port;
 
-	public int dataPacketsRecv = 0;
+	int dataPacketsRecv = 0;
 	int dataPacketsPerWAL { get { return app.model.ServiceInstances.dataPacketsPerWAL; } }
 	public int walSegments { get { return dataPacketsRecv / dataPacketsPerWAL; } }
 
@@ -55,6 +55,11 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 		if (dataPacketsRecv % dataPacketsPerWAL == 0) {
 			app.Notify ("data-flow.wal.request", this);
 		}
+	}
+
+	public void ResetDataPacketsAfterNewBaseBackup()
+	{
+		dataPacketsRecv = 0;
 	}
 
 	public bool Equals(ServiceInstanceModel other) {
