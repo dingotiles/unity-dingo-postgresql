@@ -55,7 +55,6 @@ public class DataFlowController : Controller<DingoApplication> {
 
 	IEnumerator OnRequestRestoreFromCloud(ServiceInstanceModel serviceInstanceModel)
 	{
-		Debug.Log ("OnRequestRestoreFromCloud: " + serviceInstanceModel);
 		OnRequestFromCloud(serviceInstanceModel, baseBackupPrefab);
 		yield return new WaitForSeconds(1.5f);
 		for (int i = 0; i < serviceInstanceModel.walSegments; i++) {
@@ -77,7 +76,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject fromCloud = app.view.ShowCloudOverLeader (toTileSlotView);
 
 		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
-		dataFlowObj.transform.position = fromCloud.gameObject.transform.position;
+		dataFlowObj.transform.position = fromCloud.gameObject.transform.position - new Vector3(0, dataFlowObj.gameObject.transform.localScale.y, 0);
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
 
 		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
