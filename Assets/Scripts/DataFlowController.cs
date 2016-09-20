@@ -19,7 +19,7 @@ public class DataFlowController : Controller<DingoApplication> {
 			break;
 		case "data-flow.restoration.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
-			OnRequestFromCloud (serviceInstanceModel, baseBackupPrefab);
+			StartCoroutine(OnRequestRestoreFromCloud (serviceInstanceModel));
 			break;
 		case "data-flow.wal.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
@@ -51,6 +51,17 @@ public class DataFlowController : Controller<DingoApplication> {
 		mover.to = toCloud.transform;
 
 		toCloud.GetComponent<CloudView> ().IncomingObject (dataFlowObj);
+	}
+
+	IEnumerator OnRequestRestoreFromCloud(ServiceInstanceModel serviceInstanceModel)
+	{
+		Debug.Log ("OnRequestRestoreFromCloud: " + serviceInstanceModel);
+		OnRequestFromCloud(serviceInstanceModel, baseBackupPrefab);
+		yield return new WaitForSeconds(1.5f);
+		for (int i = 0; i < serviceInstanceModel.walSegments; i++) {
+			OnRequestFromCloud(serviceInstanceModel, walPrefab);
+			yield return new WaitForSeconds(1.5f);
+		}
 	}
 
 	void OnRequestFromCloud(ServiceInstanceModel serviceInstanceModel, GameObject prefab)

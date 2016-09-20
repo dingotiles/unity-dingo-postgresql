@@ -7,7 +7,7 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 
 	public int dataPacketsRecv = 0;
 	int dataPacketsPerWAL { get { return app.model.ServiceInstances.dataPacketsPerWAL; } }
-	int walSegments { get { return dataPacketsRecv / dataPacketsPerWAL; } }
+	public int walSegments { get { return dataPacketsRecv / dataPacketsPerWAL; } }
 
 	public bool highlight;
 	bool highlightBeforeNotification;
