@@ -2,7 +2,7 @@
 using System.Collections;
 using thelab.mvc;
 
-public class RecreateServiceInstanceController : Controller<DingoApplication> 
+public class ServiceInstanceController : Controller<DingoApplication> 
 {
 	public float waitToRecreate = 5f;
 
@@ -13,6 +13,10 @@ public class RecreateServiceInstanceController : Controller<DingoApplication>
 		case "service-instance.recreate.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			StartCoroutine(OnRecreate (serviceInstanceModel));
+			break;
+		case "service-instance.failover.request":
+			serviceInstanceModel = (ServiceInstanceModel)p_target;
+			OnFailover (serviceInstanceModel);
 			break;
 
 		}
@@ -37,5 +41,27 @@ public class RecreateServiceInstanceController : Controller<DingoApplication>
 		app.Notify ("data-flow.base-backup.request", serviceInstanceModel);
 		yield return new WaitForSeconds(1f);
 		app.Notify ("data-flow.replica-backup.request", serviceInstanceModel);
+	}
+
+	void OnFailover(ServiceInstanceModel serviceInstanceModel)
+	{
+		ServersModel.Server origLeaderServer = serviceInstanceModel.leaderServer;
+		serviceInstanceModel.leaderServer = serviceInstanceModel.replicaServer;
+		serviceInstanceModel.replicaServer = origLeaderServer;
+
+		TileSlotView origLeaderTileSlotView = app.view.FindTileSlot (serviceInstanceModel, "leader");
+		TileSlotView origReplicaTileSlotView = app.view.FindTileSlot (serviceInstanceModel, "replica");
+
+		if (origReplicaTileSlotView == null) {
+			Debug.Log ("Cannot failover: cannot find replica tile slot for " + serviceInstanceModel);
+			return;
+		}
+		if (origLeaderTileSlotView != null) {
+			origLeaderTileSlotView.isLeader = false;
+			origLeaderTileSlotView.database.sphere.outboundTarget = null;
+		}
+		origReplicaTileSlotView.isLeader = true;
+
+		app.Notify ("service-instance.update.request", serviceInstanceModel);
 	}
 }

@@ -16,6 +16,7 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 	public bool sendBaseBackup;
 	public bool sendData;
 	public bool recreateFromBackup;
+	public bool failover;
 
 	public ServersModel.Server leaderServer;
 	public ServersModel.Server replicaServer;
@@ -38,6 +39,10 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 		if (recreateFromBackup) {
 			recreateFromBackup = false;
 			app.Notify ("service-instance.recreate.request", this);
+		}
+		if (failover) {
+			failover = false;
+			app.Notify ("service-instance.failover.request", this);
 		}
 	}
 

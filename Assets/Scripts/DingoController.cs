@@ -25,6 +25,10 @@ public class DingoController : Controller<DingoApplication> {
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnCreated (serviceInstanceModel);
 			break;
+		case "service-instance.update.request":
+			serviceInstanceModel = (ServiceInstanceModel)p_target;
+			OnUpdated (serviceInstanceModel);
+			break;
 		case "service-instance.delete.request":
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnDeleted (serviceInstanceModel);
@@ -38,7 +42,15 @@ public class DingoController : Controller<DingoApplication> {
 		app.view.AvailabilityZones.EnableServerContentsViews (app.model.ServiceInstances.ServiceInstances);
 		app.view.Router.EnableRoutingViews (app.model.ServiceInstances.ServiceInstances);
 		InitializeTileSlotCache ();
-		// Ensure highlighting kicks in
+		// Ensure highlighting kicks in if necessary
+		app.Notify ("service-instance.change.highlight", serviceInstanceModel);
+	}
+
+	void OnUpdated(ServiceInstanceModel serviceInstanceModel) {
+		app.view.AvailabilityZones.EnableServerContentsViews (app.model.ServiceInstances.ServiceInstances);
+		app.view.Router.EnableRoutingViews (app.model.ServiceInstances.ServiceInstances);
+		InitializeTileSlotCache ();
+		// Ensure highlighting kicks in if necessary
 		app.Notify ("service-instance.change.highlight", serviceInstanceModel);
 	}
 
