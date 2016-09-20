@@ -39,8 +39,6 @@ public class ServiceInstanceController : Controller<DingoApplication>
 		float waitToBackup = serviceInstanceModel.walSegments * 1.5f + 2f;
 		yield return new WaitForSeconds(waitToBackup);
 		app.Notify ("data-flow.base-backup.request", serviceInstanceModel);
-		yield return new WaitForSeconds(1f);
-		app.Notify ("data-flow.replica-backup.request", serviceInstanceModel);
 	}
 
 	void OnFailover(ServiceInstanceModel serviceInstanceModel)
@@ -63,5 +61,6 @@ public class ServiceInstanceController : Controller<DingoApplication>
 		origReplicaTileSlotView.isLeader = true;
 
 		app.Notify ("service-instance.update.request", serviceInstanceModel);
+		app.Notify ("data-flow.base-backup.request", serviceInstanceModel);
 	}
 }
