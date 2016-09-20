@@ -11,8 +11,10 @@ public class RouterView : View<DingoApplication>
 	{
 		for (int j = 0; j < serviceInstances.Length; j++) {
 			TileSlotView allocated = RouterServerView.FindOrAllocateTileSlot (serviceInstances[j]);
-			allocated.isRouter = true;
-			Debug.Log (allocated);
+			if (allocated != null) {
+				allocated.isRouter = true;
+				Debug.Log (allocated);
+			}
 		}
 	}
 }
