@@ -26,6 +26,8 @@ public class CursorMovement : Controller<DingoApplication> {
 			if (tileSlot != null) {
 				tileSlot.EnableCursor (true);
 			}
+		} else {
+			app.view.ClearTileSlotCursors ();
 		}
 	}
 }
