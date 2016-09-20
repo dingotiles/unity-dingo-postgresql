@@ -21,9 +21,10 @@ public class RouterView : View<DingoApplication>
 	public void ActivateAction(TileSlotView tileSlot)
 	{
 		if (tileSlot.allocatedServiceInstance != null) {
+			tileSlot.allocatedServiceInstance.highlight = true;
 			tileSlot.allocatedServiceInstance.sendData = true;
 		} else {
-			Debug.Log ("No allocated service instance to this slot");
+			app.model.ServiceInstances.ProvisionDemoServiceInstance (true);
 		}
 	}
 }

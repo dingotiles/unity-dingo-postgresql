@@ -30,7 +30,7 @@ public class ServiceInstancesModel : Model<DingoApplication> {
 		}
 	}
 
-	void ProvisionDemoServiceInstance(bool highlight) {
+	public void ProvisionDemoServiceInstance(bool highlight) {
 		provisioningDemoServiceInstance = true;
 
 		GameObject serviceInstanceObj = Instantiate (serviceInstancePrefab, transform) as GameObject;
