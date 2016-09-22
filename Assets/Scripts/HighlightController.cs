@@ -17,6 +17,9 @@ public class HighlightController : Controller<DingoApplication> {
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnChangeHighlight (serviceInstanceModel);
 			break;
+		case "highlight.reset-all":
+			ResetAllHighlights();
+			break;
 		}
 	}
 
@@ -55,6 +58,14 @@ public class HighlightController : Controller<DingoApplication> {
 			}
 		} else {
 			latestHighlighted.Remove (model);
+		}
+	}
+
+	void ResetAllHighlights()
+	{
+		latestHighlighted = new ArrayList ();
+		for (int i = 0; i < app.model.ServiceInstances.ServiceInstances.Length; i++) {
+			app.model.ServiceInstances.ServiceInstances [i].highlight = false;
 		}
 	}
 }

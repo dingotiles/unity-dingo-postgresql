@@ -87,10 +87,10 @@ public class DingoController : Controller<DingoApplication> {
 						TileSlotReference cache = tileSlotCache [tileSlot.allocatedServiceInstance];
 						ServersModel.Server leader = tileSlot.allocatedServiceInstance.leaderServer;
 						ServersModel.Server replica = tileSlot.allocatedServiceInstance.replicaServer;
-						if (leader.az == zone.az && leader.serverLabel == server.label) {
+						if (leader != null && leader.az == zone.az && leader.serverLabel == server.label) {
 							cache.leader = tileSlot;
 							cache.leader.isLeader = true;
-						} else if (replica.az == zone.az && replica.serverLabel == server.label) {
+						} else if (replica != null && replica.az == zone.az && replica.serverLabel == server.label) {
 							cache.replica = tileSlot;
 						}
 					}

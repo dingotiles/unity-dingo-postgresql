@@ -19,6 +19,7 @@ public class ServerController : Controller<DingoApplication>
 
 	IEnumerator RecreateServer(ServerView serverView)
 	{
+		app.Notify ("highlight.reset-all");
 		ArrayList inProgressServiceInstances = new ArrayList ();
 		for (int i = 0; i < serverView.TileSlots.Length; i++) {
 			TileSlotView tileSlot = serverView.TileSlots [i];
@@ -38,6 +39,7 @@ public class ServerController : Controller<DingoApplication>
 			serviceInstance.recreationInProgressServer = serviceInstance.leaderServer;
 			serviceInstance.leaderServer = serviceInstance.replicaServer;
 			serviceInstance.replicaServer = null;
+			tileSlot.isLeader = false;
 		} else {
 			Debug.Log ("Recreating replica " + tileSlot.allocatedServiceInstance);
 			serviceInstance.recreationInProgressServer = serviceInstance.replicaServer;
@@ -53,6 +55,7 @@ public class ServerController : Controller<DingoApplication>
 			serviceInstance.replicaServer = serviceInstance.recreationInProgressServer;
 			Debug.Log ("restoring " + serviceInstance);
 			serviceInstance.recreationInProgressServer = null;
+			serviceInstance.highlight = true;
 			app.Notify("service-instance.update.request", serviceInstance);
 		}
 	}
