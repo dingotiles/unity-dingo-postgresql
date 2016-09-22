@@ -9,6 +9,10 @@ public class ServersModel : Model<DingoApplication> {
 		public AvailabilityZone az;
 		public string serverLabel;
 		public bool available = true;
+
+		public override string ToString() {
+			return "Server(" + az + "/" + serverLabel + ")";
+		}
 	}
 
 	public Server[] servers;

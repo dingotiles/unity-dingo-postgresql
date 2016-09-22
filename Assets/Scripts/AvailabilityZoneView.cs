@@ -69,10 +69,9 @@ public class AvailabilityZoneView : View<DingoApplication>
 	}
 
 	bool MatchesServerModel(ServersModel.Server model, ServerView view) {
-		return model.az == az && model.serverLabel == view.label;
+		return model != null && model.az == az && model.serverLabel == view.label;
 	}
 
-	// TODO - move into AvailabilityZoneLayout14ServerView class 
 	Vector3 ServerViewLayoutPosition(int index) {
 		switch (index) {
 		case 0:

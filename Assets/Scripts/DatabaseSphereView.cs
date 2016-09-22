@@ -38,10 +38,12 @@ public class DatabaseSphereView : View<DingoApplication> {
 			if (transform.localPosition.y > lowY) {
 				transform.Translate (-Vector3.up * Time.deltaTime);
 			}
-			if (lineWaveRenderer != null && outboundTarget != null) {
-				lineWaveRenderer.enabled = false;
-				lineWave.targetOptional = null;
-			}
+			lineWaveRenderer.enabled = false;
+			lineWave.targetOptional = null;
+		}
+		if (outboundTarget == null) {
+			lineWaveRenderer.enabled = false;
+			lineWave.targetOptional = null;
 		}
 	}
 

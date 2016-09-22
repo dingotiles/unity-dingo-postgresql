@@ -39,6 +39,6 @@ public class ServerView : View<DingoApplication> {
 
 	public void ActivateAction(ServerCursor server)
 	{
-		Debug.Log ("Clicked server " + server);
+		app.Notify ("server.recreate.request", this);
 	}
 }
