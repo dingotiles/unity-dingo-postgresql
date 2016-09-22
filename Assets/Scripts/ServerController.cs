@@ -12,52 +12,48 @@ public class ServerController : Controller<DingoApplication>
 		switch (p_event) {
 		case "server.recreate.request":
 			serverView = (ServerView)p_target;
-			RecreateServer (serverView);
-			break;
-		case "tileslot.delete.request":
-			tileSlot = (TileSlotView)p_target;
-			DeleteTileSlot (tileSlot);
-			break;
-		case "tileslot.restore.request":
-			tileSlot = (TileSlotView)p_target;
-			RestoreTileSlot (tileSlot);
+			StartCoroutine( RecreateServer (serverView));
 			break;
 		}
 	}
 
-	void RecreateServer(ServerView serverView)
+	IEnumerator RecreateServer(ServerView serverView)
 	{
+		ArrayList inProgressServiceInstances = new ArrayList ();
 		for (int i = 0; i < serverView.TileSlots.Length; i++) {
 			TileSlotView tileSlot = serverView.TileSlots [i];
 			if (tileSlot.allocatedServiceInstance != null) {
-				StartCoroutine(RecreateTileSlot (tileSlot));
+				inProgressServiceInstances.Add (tileSlot.allocatedServiceInstance);
+				DeleteTileSlot (tileSlot);
 			}
 		}
-	}
-
-	IEnumerator RecreateTileSlot(TileSlotView tileSlot) {
-		app.Notify ("tileslot.delete.request", tileSlot);
 		yield return new WaitForSeconds(waitToRecreate);
-		app.Notify ("tileslot.restore.request", tileSlot);
+		RestoreServer (serverView, inProgressServiceInstances);
 	}
 
 	void DeleteTileSlot(TileSlotView tileSlot) {
 		ServiceInstanceModel serviceInstance = tileSlot.allocatedServiceInstance;
 		if (tileSlot.isLeader) {
 			Debug.Log ("Failing over leader " + tileSlot.allocatedServiceInstance);
+			serviceInstance.recreationInProgressServer = serviceInstance.leaderServer;
 			serviceInstance.leaderServer = serviceInstance.replicaServer;
-//			serviceInstance.replicaServer = serviceInstance.leaderServer;
-//			serviceInstance.replicaServer.available = false;
 			serviceInstance.replicaServer = null;
 		} else {
 			Debug.Log ("Recreating replica " + tileSlot.allocatedServiceInstance);
-//			serviceInstance.replicaServer.available = false;
+			serviceInstance.recreationInProgressServer = serviceInstance.replicaServer;
 			serviceInstance.replicaServer = null;
 		}
 		tileSlot.allocatedServiceInstance = null;
 		app.Notify("service-instance.update.request", serviceInstance);
 	}
 
-	void RestoreTileSlot(TileSlotView tileSlot) {
+	void RestoreServer(ServerView serverView, ArrayList inProgressServiceInstances) {
+		for (int i = 0; i < inProgressServiceInstances.Count; i++) {
+			ServiceInstanceModel serviceInstance = inProgressServiceInstances [i] as ServiceInstanceModel;
+			serviceInstance.replicaServer = serviceInstance.recreationInProgressServer;
+			Debug.Log ("restoring " + serviceInstance);
+			serviceInstance.recreationInProgressServer = null;
+			app.Notify("service-instance.update.request", serviceInstance);
+		}
 	}
 }

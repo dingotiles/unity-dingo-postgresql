@@ -20,6 +20,7 @@ public class ServiceInstanceModel : Model<DingoApplication> {
 
 	public ServersModel.Server leaderServer;
 	public ServersModel.Server replicaServer;
+	public ServersModel.Server recreationInProgressServer;
 
 
 	void Update() {
