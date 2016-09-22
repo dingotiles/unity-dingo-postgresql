@@ -27,4 +27,8 @@ public class RouterView : View<DingoApplication>
 			app.model.ServiceInstances.ProvisionDemoServiceInstance (true);
 		}
 	}
+
+	public void ActivateAction(ServerCursor server)
+	{
+	}
 }

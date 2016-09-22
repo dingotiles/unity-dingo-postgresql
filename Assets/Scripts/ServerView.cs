@@ -36,4 +36,9 @@ public class ServerView : View<DingoApplication> {
 	public void ActivateAction(TileSlotView tileSlot)
 	{
 	}
+
+	public void ActivateAction(ServerCursor server)
+	{
+		Debug.Log ("Clicked server " + server);
+	}
 }

@@ -117,7 +117,7 @@ public class TileSlotView : View<DingoApplication> {
 	{
 		if (enable) {
 			if (meshRenderer.sharedMaterial != app.view.tileSlotCursor) {
-				app.view.ClearTileSlotCursors ();
+				app.view.ClearCursors ();
 				meshRenderer.sharedMaterial = app.view.tileSlotCursor;
 			}
 			if(Input.GetButton ("Fire1") && activateActionTimer >= timeBetweenActivateAction && Time.timeScale != 0)

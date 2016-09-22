@@ -14,6 +14,9 @@ public class DingoView : View<DingoApplication> {
 	public GameObject svrContentsPrefab;
 	public GameObject svrPrefab;
 	public GameObject cloudPrefab;
+
+	public Material serverDefault;
+	public Material serverCursor;
 	public Material tileSlotDefault;
 	public Material tileSlotCursor;
 
@@ -41,11 +44,15 @@ public class DingoView : View<DingoApplication> {
 		return tileSlot.ShowCloud ();
 	}
 
-	public void ClearTileSlotCursors() 
+	public void ClearCursors() 
 	{
 		TileSlotView[] slots = transform.GetComponentsInChildren<TileSlotView> ();
 		for (int i = 0; i < slots.Length; i++) {
 			slots [i].EnableCursor (false);
+		}
+		ServerCursor[] servers = transform.GetComponentsInChildren<ServerCursor> ();
+		for (int i = 0; i < servers.Length; i++) {
+			servers [i].EnableCursor (false);
 		}
 	}
 }

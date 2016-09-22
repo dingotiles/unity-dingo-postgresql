@@ -26,8 +26,12 @@ public class CursorMovement : Controller<DingoApplication> {
 			if (tileSlot != null) {
 				tileSlot.EnableCursor (true);
 			}
+			ServerCursor server = tileSlotHit.collider.gameObject.GetComponent<ServerCursor> ();
+			if (server != null) {
+				server.EnableCursor (true);
+			}
 		} else {
-			app.view.ClearTileSlotCursors ();
+			app.view.ClearCursors ();
 		}
 	}
 }
