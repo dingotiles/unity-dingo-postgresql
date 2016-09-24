@@ -8,7 +8,6 @@ public class ServerController : Controller<DingoApplication>
 
 	public override void OnNotification(string p_event, Object p_target, params object[] p_data) {
 		ServerView serverView = null;
-		TileSlotView tileSlot = null;
 		switch (p_event) {
 		case "server.recreate.request":
 			serverView = (ServerView)p_target;
