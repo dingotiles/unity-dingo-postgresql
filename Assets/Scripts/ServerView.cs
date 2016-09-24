@@ -35,6 +35,9 @@ public class ServerView : View<DingoApplication> {
 
 	public void ActivateAction(TileSlotView tileSlot)
 	{
+		if (tileSlot.isLeader) {
+			app.Notify("service-instance.recreate.request", tileSlot.allocatedServiceInstance);
+		}
 	}
 
 	public void ActivateAction(ServerCursor server)
