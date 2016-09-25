@@ -43,7 +43,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		}
 		GameObject toCloud = app.view.ShowCloudOverLeader (fromTileSlotView);
 
-		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
+		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromTileSlotView.database.sphere.gameObject.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
 
@@ -75,7 +75,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject toSphere = toTileSlotView.database.sphere.gameObject;
 		GameObject fromCloud = app.view.ShowCloudOverLeader (toTileSlotView);
 
-		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
+		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromCloud.gameObject.transform.position - new Vector3(0, dataFlowObj.gameObject.transform.localScale.y, 0);
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
 
@@ -102,7 +102,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject fromSphere = fromTileSlotView.database.sphere.gameObject;
 		GameObject toSphere = toTileSlotView.database.sphere.gameObject;
 
-		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
+		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromSphere.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
 
@@ -129,7 +129,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject fromSphere = fromTileSlotView.database.sphere.gameObject;
 		GameObject toSphere = toTileSlotView.database.sphere.gameObject;
 
-		GameObject dataFlowObj = Instantiate (prefab) as GameObject;
+		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromSphere.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
 
