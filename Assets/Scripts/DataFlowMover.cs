@@ -13,7 +13,7 @@ public class DataFlowMover : View<DingoApplication> {
 			return;
 		}
 
-		transform.position = Vector3.MoveTowards(transform.position, to.transform.position, Time.deltaTime * speed);
+		transform.position = Vector3.MoveTowards(transform.position, to.transform.position, Time.deltaTime * speed * app.view.scale);
 	}
 
 }

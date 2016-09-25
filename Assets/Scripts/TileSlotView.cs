@@ -96,7 +96,7 @@ public class TileSlotView : View<DingoApplication> {
 			this.contents = Instantiate (contentsPrefab, transform) as GameObject;
 			this.contents.transform.localPosition = new Vector3 (0.006f, contentsHiddenY, -0.006f);;
 			this.contents.transform.localRotation = Quaternion.identity;
-			this.contents.transform.localScale = new Vector3 (0.92f, 6f, 0.92f);
+			this.contents.transform.localScale = new Vector3 (0.92f, 6f, 0.92f); // 6f is for height
 		}
 	}
 
@@ -109,6 +109,8 @@ public class TileSlotView : View<DingoApplication> {
 		if (cloudObject == null) {
 			cloudObject = Instantiate (cloudPrefab, transform) as GameObject;
 			cloudObject.transform.localPosition = new Vector3 (0, cloudY, 0);
+			Debug.Log (cloudPrefab.transform.localScale);
+			cloudObject.transform.localScale = new Vector3(2f, 1.5f, 2f);
 		}
 		return cloudObject;
 	}

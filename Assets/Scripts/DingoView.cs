@@ -4,14 +4,15 @@ using thelab.mvc;
 
 public class DingoView : View<DingoApplication> {
 
-	public float svrContentsHiddenY = -7f;
-	public float svrContentsTopY = 1f;
-	public float svrContentsLiftRate = 1.5f;
 	public float sphereLowY = 0.9f;
 	public float sphereHighY = 1.74f;
 	public float cloudY = 40f;
 	public float cloudWaitForDeath = 5f;
 	public GameObject svrContentsPrefab;
+	public float scale { get { return transform.localScale.x; } }
+	public float svrContentsHiddenY { get { return (svrContentsPrefab.transform.localScale.y + 0.5f) * scale; } }
+	public float svrContentsLiftRate { get { return 1.5f * scale; } }
+	public float svrContentsTopY { get { return 1f * scale; } }
 	public GameObject svrPrefab;
 	public GameObject cloudPrefab;
 

@@ -34,6 +34,7 @@ public class ServiceInstancesModel : Model<DingoApplication> {
 		provisioningDemoServiceInstance = true;
 
 		GameObject serviceInstanceObj = Instantiate (serviceInstancePrefab, transform) as GameObject;
+
 		ServiceInstanceModel serviceInstance = serviceInstanceObj.GetComponent<ServiceInstanceModel> ();
 		serviceInstance.port = NextPort ();
 		serviceInstance.name = "Demo " + serviceInstance.port;

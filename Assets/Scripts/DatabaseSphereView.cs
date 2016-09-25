@@ -32,6 +32,8 @@ public class DatabaseSphereView : View<DingoApplication> {
 				if (lineWaveRenderer != null && outboundTarget != null) {
 					lineWaveRenderer.enabled = true;
 					lineWave.targetOptional = outboundTarget;
+					lineWave.traceWidth = 0.5f * app.view.scale;
+					lineWave.transform.localScale = new Vector3(1/(app.view.scale*0.5f), 1f, 1/(app.view.scale*0.5f));
 				}
 			}
 		} else {

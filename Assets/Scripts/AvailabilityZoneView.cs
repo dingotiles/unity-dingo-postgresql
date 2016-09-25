@@ -28,6 +28,7 @@ public class AvailabilityZoneView : View<DingoApplication>
 			}
 			GameObject serverViewObj = Instantiate (app.view.svrPrefab, serverViewsParent) as GameObject; 
 			serverViewObj.transform.localPosition = ServerViewLayoutPosition (serverNum);
+			serverViewObj.transform.localScale = app.view.svrPrefab.transform.localScale;
 			ServerView view = serverViewObj.GetComponent<ServerView> ();
 			view.label = servers [i].serverLabel;
 			serverNum++;

@@ -46,6 +46,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromTileSlotView.database.sphere.gameObject.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+		dataFlowObj.transform.localScale = prefab.transform.localScale;
 
 		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
 		mover.to = toCloud.transform;
@@ -78,6 +79,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromCloud.gameObject.transform.position - new Vector3(0, dataFlowObj.gameObject.transform.localScale.y, 0);
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+		dataFlowObj.transform.localScale = prefab.transform.localScale;
 
 		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
 		mover.to = toSphere.transform;
@@ -105,6 +107,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromSphere.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+		dataFlowObj.transform.localScale = prefab.transform.localScale;
 
 		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
 		mover.to = toSphere.transform;
@@ -132,6 +135,7 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
 		dataFlowObj.transform.position = fromSphere.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
+		dataFlowObj.transform.localScale = prefab.transform.localScale;
 
 		DataFlowMover mover = dataFlowObj.GetComponent<DataFlowMover> ();
 		mover.to = toSphere.transform;
