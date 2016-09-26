@@ -8,10 +8,12 @@ public class ServerCursor : View<DingoApplication>
 	MeshRenderer meshRenderer;
 	float activateActionTimer;
 	float timeBetweenActivateAction = 0.15f;
+	Material defaultMaterial;
 
 	void Awake()
 	{
 		meshRenderer = GetComponent<MeshRenderer> ();
+		defaultMaterial = meshRenderer.sharedMaterial;
 	}
 
 	void Update ()
@@ -31,7 +33,7 @@ public class ServerCursor : View<DingoApplication>
 				ActivateAction ();
 			}
 		} else {
-			meshRenderer.sharedMaterial = app.view.serverDefault;
+			meshRenderer.sharedMaterial = defaultMaterial;
 		}
 	}
 

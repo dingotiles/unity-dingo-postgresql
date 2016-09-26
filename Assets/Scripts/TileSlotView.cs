@@ -47,7 +47,7 @@ public class TileSlotView : View<DingoApplication> {
 	float timeBetweenActivateAction = 0.15f;
 
 	void Awake() {
-		meshRenderer = GetComponent<MeshRenderer> ();
+		meshRenderer = GetComponentInChildren<MeshRenderer> ();
 	}
 
 	void Update () {
@@ -93,10 +93,10 @@ public class TileSlotView : View<DingoApplication> {
 	void CreateContentsIfMissing ()
 	{
 		if (contents == null) {
-			this.contents = Instantiate (contentsPrefab, transform) as GameObject;
-			this.contents.transform.localPosition = new Vector3 (0.006f, contentsHiddenY, -0.006f);;
-			this.contents.transform.localRotation = Quaternion.identity;
-			this.contents.transform.localScale = new Vector3 (0.92f, 6f, 0.92f); // 6f is for height
+			contents = Instantiate (contentsPrefab, transform) as GameObject;
+			contents.transform.localPosition = new Vector3 (0f, contentsHiddenY, 0f);
+			contents.transform.localRotation = Quaternion.identity;
+			contents.transform.localScale = contentsPrefab.transform.localScale;
 		}
 	}
 
