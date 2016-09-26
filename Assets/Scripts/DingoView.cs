@@ -27,6 +27,11 @@ public class DingoView : View<DingoApplication> {
 	public RouterView Router { get { return p_router = base.Assert<RouterView> (p_router); } }
 	RouterView p_router;
 
+	void Update()
+	{
+		transform.localScale = new Vector3(transform.localScale.x, transform.localScale.x, transform.localScale.x);
+	}
+
 	public TileSlotView FindTileSlot(ServiceInstanceModel serviceInstance, string role)
 	{
 		TileSlotView[] slots = transform.GetComponentsInChildren<TileSlotView> ();
