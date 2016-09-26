@@ -6,8 +6,8 @@ public class DatabaseSphereView : View<DingoApplication> {
 	public bool visible;
 	public GameObject outboundTarget;
 
-	float lowY { get { return app.view.sphereLowY * app.view.scale; } }
-	float highY { get { return app.view.sphereHighY * app.view.scale; } }
+	float lowY { get { return app.view.sphereLowY; } }
+	float highY { get { return app.view.sphereHighY; } }
 
 	LineRenderer lineWaveRenderer;
 	LineWave lineWave;

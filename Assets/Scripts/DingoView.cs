@@ -10,9 +10,9 @@ public class DingoView : View<DingoApplication> {
 	public float cloudWaitForDeath = 5f;
 	public GameObject svrContentsPrefab;
 	public float scale { get { return transform.localScale.x; } }
-	public float svrContentsHiddenY { get { return -1f * scale; } }
-	public float svrContentsLiftRate { get { return 1.5f * scale; } }
-	public float svrContentsTopY { get { return 0.2f * scale; } }
+	public float svrContentsTopY { get { return 0.2f; } }
+	public float svrContentsHiddenY { get { return -1f; } }
+	public float svrContentsLiftRate { get { return 1.5f; } }
 	public GameObject svrPrefab;
 	public GameObject cloudPrefab;
 

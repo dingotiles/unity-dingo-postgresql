@@ -64,7 +64,7 @@ public class TileSlotView : View<DingoApplication> {
 	{
 		if (contents) {
 			if (contents.transform.localPosition.y > contentsHiddenY) {
-				contents.transform.Translate (-Vector3.up * contentsLiftRate * Time.deltaTime);
+				contents.transform.Translate (-Vector3.up * contentsLiftRate * Time.deltaTime * app.view.scale);
 			} else {
 				Destroy (this.contents);
 			}
@@ -76,7 +76,7 @@ public class TileSlotView : View<DingoApplication> {
 		CreateContentsIfMissing ();
 		contents.SetActive (true);
 		if (contents.transform.localPosition.y < contentsTopY) {
-			contents.transform.Translate (Vector3.up * contentsLiftRate * Time.deltaTime);
+			contents.transform.Translate (Vector3.up * contentsLiftRate * Time.deltaTime * app.view.scale);
 		}
 	}
 
@@ -110,7 +110,7 @@ public class TileSlotView : View<DingoApplication> {
 			cloudObject = Instantiate (cloudPrefab, transform) as GameObject;
 			cloudObject.transform.localPosition = new Vector3 (0, cloudY, 0);
 			Debug.Log (cloudPrefab.transform.localScale);
-			cloudObject.transform.localScale = new Vector3(2f, 1.5f, 2f);
+			cloudObject.transform.localScale = cloudPrefab.transform.localScale;
 		}
 		return cloudObject;
 	}
