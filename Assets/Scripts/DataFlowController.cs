@@ -77,7 +77,8 @@ public class DataFlowController : Controller<DingoApplication> {
 		GameObject fromCloud = app.view.ShowCloudOverLeader (toTileSlotView);
 
 		GameObject dataFlowObj = Instantiate (prefab, app.view.transform) as GameObject;
-		dataFlowObj.transform.position = fromCloud.gameObject.transform.position - new Vector3(0, dataFlowObj.gameObject.transform.localScale.y, 0);
+//		dataFlowObj.transform.position = fromCloud.gameObject.transform.position - new Vector3(0, fromCloud.transform.localScale.y, 0);
+		dataFlowObj.transform.position = fromCloud.gameObject.transform.position;
 		dataFlowObj.transform.localRotation = Quaternion.Euler (0f, 0f, 20f);
 		dataFlowObj.transform.localScale = prefab.transform.localScale;
 
