@@ -27,7 +27,8 @@ public class DatabaseSphereView : View<DingoApplication> {
 	{
 		if (visible) {
 			if (transform.localPosition.y < highY) {
-				transform.Translate (Vector3.up * Time.deltaTime);
+				Debug.Log ("Sphere " + transform.localPosition + " < " + highY);
+				transform.localPosition += Vector3.up * Time.deltaTime;
 			} else {
 				if (lineWaveRenderer != null && outboundTarget != null) {
 					lineWaveRenderer.enabled = true;
