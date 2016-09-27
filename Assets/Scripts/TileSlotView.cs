@@ -57,7 +57,6 @@ public class TileSlotView : View<DingoApplication> {
 		} else {
 			HideContents ();
 		}
-		SetContentsHighlight (highlightContents);
 	}
 
 	void HideContents()
@@ -78,7 +77,9 @@ public class TileSlotView : View<DingoApplication> {
 		if (contents.transform.localPosition.y < contentsTopY) {
 			contents.transform.Translate (Vector3.up * contentsLiftRate * Time.deltaTime * app.view.scale);
 		}
-	}
+        SetContentsHighlight(allocatedServiceInstance.highlight);
+
+    }
 
 	public void SetContentsHighlight(bool highlight)
 	{
@@ -121,6 +122,7 @@ public class TileSlotView : View<DingoApplication> {
 			if (meshRenderer.sharedMaterial != app.view.tileSlotCursor) {
 				app.view.ClearCursors ();
 				meshRenderer.sharedMaterial = app.view.tileSlotCursor;
+                app.Notify("gesture.focused-object.changed", gameObject);
 			}
 			if(Input.GetButton ("Fire1") && activateActionTimer >= timeBetweenActivateAction && Time.timeScale != 0)
 			{

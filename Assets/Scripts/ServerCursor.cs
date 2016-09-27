@@ -27,8 +27,9 @@ public class ServerCursor : View<DingoApplication>
 			if (meshRenderer.sharedMaterial != app.view.serverCursor) {
 				app.view.ClearCursors ();
 				meshRenderer.sharedMaterial = app.view.serverCursor;
-			}
-			if(Input.GetButton ("Fire1") && activateActionTimer >= timeBetweenActivateAction && Time.timeScale != 0)
+                app.Notify("gesture.focused-object.changed", gameObject);
+            }
+            if (Input.GetButton ("Fire1") && activateActionTimer >= timeBetweenActivateAction && Time.timeScale != 0)
 			{
 				ActivateAction ();
 			}

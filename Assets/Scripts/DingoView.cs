@@ -51,7 +51,8 @@ public class DingoView : View<DingoApplication> {
 
 	public void ClearCursors() 
 	{
-		TileSlotView[] slots = transform.GetComponentsInChildren<TileSlotView> ();
+        app.Notify("focused-object.changed", null);
+        TileSlotView[] slots = transform.GetComponentsInChildren<TileSlotView> ();
 		for (int i = 0; i < slots.Length; i++) {
 			slots [i].EnableCursor (false);
 		}

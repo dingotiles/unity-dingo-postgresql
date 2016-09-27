@@ -33,7 +33,6 @@ public class DingoController : Controller<DingoApplication> {
 			serviceInstanceModel = (ServiceInstanceModel)p_target;
 			OnDeleted (serviceInstanceModel);
 			break;
-
 		}
 	}
 

@@ -20,7 +20,7 @@ public class CursorMovement : Controller<DingoApplication> {
 	void ShowCursor()
 	{
         RaycastHit tileSlotHit;
-#if UNITY
+#if UNITY_EDITOR
         Ray cameraRay = Camera.main.ScreenPointToRay (Input.mousePosition);
         var raycast = Physics.Raycast (cameraRay, out tileSlotHit, camRayLength, tileSlotMask);
 #else
