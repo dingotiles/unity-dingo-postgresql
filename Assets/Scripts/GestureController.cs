@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using thelab.mvc;
+#if UNITY_EDITOR
+public class GestureController : Controller<DingoApplication> {}
+#else
 using UnityEngine.VR.WSA.Input;
-
 public class GestureController : Controller<DingoApplication> {
+
     public GameObject FocusedObject = null;
     GestureRecognizer gestureRecognizer;
 
@@ -41,3 +44,4 @@ public class GestureController : Controller<DingoApplication> {
     }
 
 }
+#endif
